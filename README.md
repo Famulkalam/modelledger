@@ -132,7 +132,7 @@ cases are shown but left out of the gap.
 
 ## Quick start
 
-Use Python 3.11 or later (developed on 3.11, also run on 3.14). Package versions are pinned so the numbers above reproduce.
+Use Python 3.11 or later (developed on 3.11, also run on 3.14). Package versions are pinned; results can differ slightly between Python versions (the figures above come from Python 3.14).
 
 ```bash
 python3.11 -m venv .venv && source .venv/bin/activate
