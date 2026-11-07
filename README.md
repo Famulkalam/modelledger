@@ -24,11 +24,11 @@ and PSI against the development sample.*
 
 | | Result on 300 held-out applicants |
 |---|---|
-| Model discrimination | Gini 0.56 (AUC 0.78); 5-fold CV AUC 0.77 on the training set |
-| Score stability | PSI 0.03 against the development sample (stable) |
-| Approval-rate gap by sex | 0.02 (female 79.2%, male 81.4%) |
-| Approval-rate gap by age group | **0.17** (18-25: 72.9%, 36-45: 90.1%), above the illustrative 0.10 review threshold |
-| Equal-opportunity gap by age group | **0.12**: among applicants who went on to repay, 18-25s were approved 82% of the time against 95% for 36-45s |
+| Model discrimination | Gini 0.56 (AUC 0.78); 5-fold CV AUC 0.76 on the training set |
+| Score stability | PSI 0.05 against the development sample (stable) |
+| Approval-rate gap by sex | 0.003 (female 78.1%, male 78.4%) |
+| Approval-rate gap by age group | **0.18** (18-25: 67.8%, 36-45: 85.9%), above the illustrative 0.10 review threshold |
+| Equal-opportunity gap by age group | **0.13**: among applicants who went on to repay, 18-25s were approved 76% of the time against 89% for 36-45s |
 | Integrity | All three tamper scenarios below are detected |
 
 The age result is a genuine finding from the data, not a planted one: younger
@@ -95,7 +95,7 @@ is a multi-process test for this).
 - **Data:** German Credit (OpenML `credit-g`, 1,000 applicants), stratified
   70/30 split. The ledger is seeded only with the 300 test applicants.
 - **Model:** XGBoost (depth 3, 300 trees). Test AUC 0.78, Gini 0.56, accuracy
-  76% against 70% for always predicting the majority class. Train AUC is 0.92,
+  75% against 70% for always predicting the majority class. Train AUC is 0.92,
   so there is some overfitting; CV and test AUC agree.
 - **Excluded inputs:** `personal_status` (it encodes sex) and `foreign_worker`
   (a nationality proxy) are not model inputs. Sex is still recorded with each
@@ -132,7 +132,7 @@ cases are shown but left out of the gap.
 
 ## Quick start
 
-Use Python 3.11. Package versions are pinned so the numbers above reproduce.
+Use Python 3.11 or later (developed on 3.11, also run on 3.14). Package versions are pinned so the numbers above reproduce.
 
 ```bash
 python3.11 -m venv .venv && source .venv/bin/activate
