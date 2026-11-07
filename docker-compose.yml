@@ -1,0 +1,44 @@
+# Four-service demo: credit model -> Redis queue -> worker -> ledger, plus the API.
+# Prerequisites: a .env file with keys (see .env.example) and a trained model
+# (python scripts/train_model.py writes models/credit_model.joblib).
+
+x-app: &app
+  build: .
+  env_file: .env
+  environment:
+    REDIS_URL: redis://redis:6379/0
+    DB_PATH: /app/data/modelledger.db
+    ANCHOR_DIR: /app/anchors
+  volumes:
+    - ./data:/app/data
+    - ./anchors:/app/anchors
+    - ./models:/app/models
+    - ./reports:/app/reports
+  depends_on:
+    redis:
+      condition: service_healthy
+
+services:
+  redis:
+    image: redis:7-alpine
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  credit-model:
+    <<: *app
+    command: uvicorn modelledger.api.stub_credit_model:app --host 0.0.0.0 --port 8001
+    ports:
+      - "8001:8001"
+
+  modelledger-api:
+    <<: *app
+    command: uvicorn modelledger.api.server:app --host 0.0.0.0 --port 8000
+    ports:
+      - "8000:8000"
+
+  modelledger-worker:
+    <<: *app
+    command: python -m modelledger.worker

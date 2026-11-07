@@ -1,0 +1,27 @@
+# Illustrative governance settings, shown in the PDF evidence pack.
+# A real deployment would take these from the firm's model risk policy.
+
+alert_review:
+  reviewer: "Model owner (illustrative)"
+  response_time_days: 5
+  escalation_path: "Model risk committee"
+
+log_retention:
+  minimum_years: 5
+  basis: "Firm record-retention policy (set by compliance)"
+  archive: "Write-once object storage, e.g. S3 Object Lock"
+
+access_controls:
+  read_access:
+    - "Model validation"
+    - "Internal audit"
+    - "Compliance"
+  write_access:
+    - "ModelLedger service account only"
+  db_admin_access: "Named administrators; all access logged"
+
+review_cycle:
+  ledger_integrity: "Daily (automated)"
+  fairness_metrics: "Monthly, by the model owner"
+  performance_metrics: "Monthly, by the model owner"
+  regulatory_mapping: "Annually or after regulatory change"

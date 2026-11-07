@@ -1,0 +1,23 @@
+# Python
+__pycache__/
+*.py[cod]
+*.egg-info/
+.pytest_cache/
+dist/
+build/
+
+# Environment and secrets
+.env
+.venv/
+venv/
+
+# Data, model binary and generated artefacts (recreate with make train / seed / report)
+data/
+models/*.joblib
+anchors/
+reports/
+
+# OS / IDE
+.DS_Store
+.vscode/
+.idea/
